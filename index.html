@@ -14,118 +14,266 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- ① タイトルタグ（28文字：主要キーワードと提供価値を集約） -->
   <title>四柱推命 深層鑑定 - 無料で占う本格五行バランス解析ツール</title>
-  
-  <!-- ① メタディスクリプション（109文字：適切な文字数で要約と訴求要素を含める） -->
   <meta name="description" content="生年月日と出生時刻から五行バランスを徹底解析。あなたの宿命・大運・流年を紐解く無料の本格四柱推命Webアプリです。ユング心理学に基づく深層コラムや知識辞典も充実。今すぐ自分だけの深層鑑定書を生成してみましょう。">
+
+  <!-- フォントの読み込み -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome アイコン -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <style>
     :root {
-      --primary-color: #ff4b4b;
-      --bg-color: #ffffff;
-      --text-color: #333333;
-      --card-bg: #f9f9f9;
+      --bg-dark: #070c18;
+      --card-bg: rgba(18, 28, 48, 0.75);
+      --card-border: rgba(212, 175, 55, 0.25);
+      --primary-gold: #d4af37;
+      --gold-gradient: linear-gradient(135deg, #f3d078 0%, #c5a059 50%, #9a7835 100%);
+      --gold-btn-gradient: linear-gradient(135deg, #e6c267 0%, #c59b3f 50%, #9e7526 100%);
+      --text-main: #f1f5f9;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
     
     body { 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      line-height: 1.6; 
-      color: var(--text-color); 
-      max-width: 800px; 
-      margin: 0 auto; 
-      padding: 40px 20px; 
-      text-align: center; 
-      box-sizing: border-box;
+      font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.8; 
+      color: var(--text-main); 
+      background: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(20, 35, 65, 0.5) 0%, transparent 50%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+
+    .container {
+      max-width: 760px;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
     }
     
     header {
-      margin-bottom: 25px;
+      margin-bottom: 35px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    
-    /* ② セマンティックな見出し構造（h1はページ内原則1つ） */
+
+    .logo-wrapper {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      margin-bottom: 25px;
+      border-radius: 50%;
+      padding: 3px;
+      background: var(--gold-gradient);
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.35), 0 10px 30px rgba(0, 0, 0, 0.6);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      overflow: hidden;
+    }
+
+    .logo-wrapper:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 35px rgba(212, 175, 55, 0.5), 0 12px 35px rgba(0, 0, 0, 0.7);
+    }
+
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+      display: block;
+      background-color: #0b132a;
+    }
+
     h1 { 
-      font-size: 2.2rem; 
-      color: #111111; 
-      margin-bottom: 10px;
+      font-family: 'Shippori Mincho', serif;
+      font-size: 2.5rem; 
+      font-weight: 700;
+      letter-spacing: 2px;
+      background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 60%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
       line-height: 1.3;
-      letter-spacing: -0.5px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     }
     
     .subtitle { 
+      font-family: 'Shippori Mincho', serif;
       font-size: 1.15rem; 
-      color: #555555; 
-      margin-top: 0;
+      color: var(--primary-gold); 
+      letter-spacing: 1.5px;
+      font-weight: 500;
+      opacity: 0.95;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--gold-gradient);
+      margin: 18px auto 0;
+      border-radius: 2px;
+    }
+
+    .btn-container {
+      margin: 30px 0 45px;
     }
     
     .btn { 
-      display: inline-block; 
-      background-color: var(--primary-color); 
-      color: #ffffff; 
-      padding: 16px 32px; 
-      font-size: 1.2rem; 
-      font-weight: bold; 
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: var(--gold-btn-gradient); 
+      color: #0b111e; 
+      padding: 18px 42px; 
+      font-size: 1.25rem; 
+      font-weight: 700; 
+      font-family: 'Shippori Mincho', serif;
+      letter-spacing: 1px;
       text-decoration: none; 
-      border-radius: 8px; 
-      margin: 20px 0; 
-      transition: background-color 0.2s, transform 0.1s;
-      box-shadow: 0 4px 12px rgba(255, 75, 75, 0.25);
+      border-radius: 50px; 
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35), 0 2px 6px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
     
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      transform: scale(0);
+      transition: transform 0.6s ease-out;
+    }
+
     .btn:hover { 
-      background-color: #e03e3e;
-      transform: translateY(-1px);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(212, 175, 55, 0.5), 0 4px 12px rgba(0, 0, 0, 0.5);
+      color: #000000;
     }
-    
+
+    .btn:hover::before {
+      transform: scale(1);
+    }
+
+    .btn i {
+      font-size: 1.1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover i {
+      transform: translateX(4px);
+    }
+
     .features { 
       text-align: left; 
-      margin-top: 40px; 
       background: var(--card-bg); 
-      padding: 28px; 
-      border-radius: 12px; 
-      border: 1px solid #eee;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 36px; 
+      border-radius: 16px; 
+      border: 1px solid var(--card-border);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .features::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 30px;
+      right: 30px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
     }
     
     .features h2 {
+      font-family: 'Shippori Mincho', serif;
       font-size: 1.4rem;
-      margin-top: 0;
-      color: #222;
-      border-bottom: 2px solid var(--primary-color);
-      padding-bottom: 8px;
-      display: inline-block;
+      margin-bottom: 22px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 1px;
+    }
+
+    .features h2 i {
+      color: var(--primary-gold);
+      font-size: 1.2rem;
     }
     
     .features ul {
-      padding-left: 20px;
-      margin-bottom: 0;
+      list-style: none;
+      padding-left: 0;
     }
     
     .features li {
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       font-size: 1.05rem;
+      color: #cbd5e1;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      line-height: 1.6;
     }
 
-    /* ④ レスポンシブデザイン（画面幅が768px以下のスマートフォン等での自動調整） */
+    .features li:last-child {
+      margin-bottom: 0;
+    }
+
+    .features li i {
+      color: var(--primary-gold);
+      margin-top: 5px;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
     @media (max-width: 768px) {
       body { 
-        padding: 24px 16px; 
+        padding: 40px 16px; 
+      }
+      .logo-wrapper {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 20px;
       }
       h1 { 
-        font-size: 1.75rem; 
+        font-size: 1.85rem; 
       }
       .subtitle { 
         font-size: 1rem; 
       }
       .btn { 
-        display: block; 
+        display: flex; 
         width: 100%; 
-        box-sizing: border-box;
-        padding: 16px 16px;
-        font-size: 1.1rem;
+        padding: 16px 20px;
+        font-size: 1.15rem;
       }
       .features { 
-        padding: 20px; 
-        margin-top: 30px;
+        padding: 24px; 
       }
       .features h2 {
         font-size: 1.25rem;
@@ -137,24 +285,51 @@
   </style>
 </head>
 <body>
-  <!-- ② セマンティックな構造（header / main / section の活用） -->
-  <header>
-    <h1>四柱推命 深層鑑定</h1>
-    <p class="subtitle">五行バランス解析に基づく運命診断ラボ</p>
-  </header>
 
-  <main>
-    <a href="https://uranai.streamlit.app" class="btn" target="_blank" rel="noopener">アプリを今すぐ使う（無料）</a>
+  <div class="container">
+    <header>
+      <div class="logo-wrapper">
+        <img src="logo_2.png" alt="Five Elements Lab ロゴ" class="logo-img">
+      </div>
+      <h1>四柱推命 深層鑑定</h1>
+      <p class="subtitle">五行バランス解析に基づく運命診断ラボ</p>
+      <div class="divider"></div>
+    </header>
 
-    <section class="features">
-      <h2>このツールでできること</h2>
-      <ul>
-        <li>生年月日・出生時刻に基づく正確な命式（四柱 / 三柱推命）の算出</li>
-        <li>五行バランススコア・身強身弱の客観的数値解析</li>
-        <li>10年ごとの「大運」および1年ごとの「流年」運気タイムライン表示</li>
-        <li>知的サバイバルコラムおよび四柱推命の知識辞典の閲覧</li>
-      </ul>
-    </section>
-  </main>
+    <main>
+      <div class="btn-container">
+        <a href="https://uranai.streamlit.app" class="btn" target="_blank" rel="noopener">
+          <span>アプリを今すぐ使う（無料）</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <section class="features">
+        <h2>
+          <i class="fa-solid fa-compass"></i>
+          <span>このツールでできること</span>
+        </h2>
+        <ul>
+          <li>
+            <i class="fa-solid fa-circle-check"></i>
+            <span>生年月日・出生時刻に基づく正確な命式（四柱 / 三柱推命）の算出</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-circle-check"></i>
+            <span>五行バランススコア・身強身弱の客観的数値解析</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-circle-check"></i>
+            <span>10年ごとの「大運」および1年ごとの「流年」運気タイムライン表示</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-circle-check"></i>
+            <span>知的サバイバルコラムおよび四柱推命の知識辞典の閲覧</span>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
 </body>
 </html>
