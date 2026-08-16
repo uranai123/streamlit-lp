@@ -133,13 +133,11 @@
       border-radius: 2px;
     }
 
-    /* 縦並びCTAボタンエリア */
+    /* CTAボタンエリア (単一ゴールドボタン) */
     .btn-container {
       margin: 35px 0 45px;
       display: flex;
-      flex-direction: column;
-      gap: 16px;
-      align-items: center;
+      justify-content: center;
       width: 100%;
     }
     
@@ -147,9 +145,9 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      padding: 16px 28px; 
-      font-size: 1.05rem; 
+      gap: 12px;
+      padding: 18px 36px; 
+      font-size: 1.1rem; 
       font-weight: 700; 
       font-family: 'Shippori Mincho', serif;
       letter-spacing: 1px;
@@ -157,32 +155,14 @@
       border-radius: 50px; 
       transition: all 0.3s ease;
       width: 100%;
-      max-width: 400px;
-    }
-
-    .btn-free {
-      background: rgba(15, 23, 42, 0.85);
-      color: #e2e8f0;
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .btn-free:hover {
-      background: rgba(30, 41, 59, 0.95);
-      border-color: var(--primary-gold);
-      color: #ffffff;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
-    }
-
-    .btn-paid {
+      max-width: 420px;
       background: var(--gold-btn-gradient); 
       color: #0b111e; 
       border: 1px solid rgba(255, 255, 255, 0.4);
       box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4), 0 2px 6px rgba(0, 0, 0, 0.4);
     }
 
-    .btn-paid:hover { 
+    .cta-btn:hover { 
       transform: translateY(-3px);
       box-shadow: 0 10px 28px rgba(212, 175, 55, 0.6), 0 4px 12px rgba(0, 0, 0, 0.5);
       color: #000000;
@@ -497,17 +477,10 @@
   </header>
 
   <main>
-    <!-- CTAボタンエリア -->
+    <!-- CTAボタンエリア（単一ゴールドボタン） -->
     <div class="btn-container">
-      <a href="https://uranai123.streamlit.app" class="cta-btn btn-free" target="_blank" rel="noopener">
-        <i class="fa-solid fa-bolt"></i>
-        <span>簡易鑑定レポート（無料版）</span>
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
-
-      <a href="https://uranai123.net/pro" class="cta-btn btn-paid">
-        <i class="fa-solid fa-lock"></i>
-        <span>本格深層解剖レポート（有料版）</span>
+      <a href="https://uranai123.streamlit.app" class="cta-btn" target="_blank" rel="noopener">
+        <span>アプリを今すぐ使う（無料）</span>
         <i class="fa-solid fa-arrow-right"></i>
       </a>
     </div>
