@@ -22,6 +22,9 @@
       color: var(--text-main);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
       line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* ナビゲーションバー */
@@ -66,6 +69,9 @@
       max-width: 850px;
       margin: 40px auto;
       padding: 0 20px 60px;
+      flex: 1;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -87,7 +93,7 @@
       display: grid;
       grid-template-columns: 2fr 1fr;
       gap: 16px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       background: rgba(30, 41, 59, 0.5);
       padding: 20px;
       border-radius: 12px;
@@ -129,6 +135,31 @@
       border-color: var(--primary-gold);
     }
 
+    /* アコーディオン一括操作ボタン */
+    .accordion-controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .btn-action {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-sub);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--primary-gold);
+      border-color: var(--primary-gold);
+    }
+
     /* カテゴリセクション */
     .category-section {
       margin-bottom: 32px;
@@ -145,7 +176,7 @@
       gap: 8px;
     }
 
-    /* 用語アコーディオン (st.expander 再現) */
+    /* 用語アコーディオン */
     .dict-item {
       background: var(--card-bg);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -201,6 +232,84 @@
       text-align: center;
       margin-top: 20px;
     }
+
+    /* 共通フッター */
+    .site-footer {
+      background-color: #090c10;
+      border-top: 1px solid rgba(250, 250, 250, 0.1);
+      padding: 36px 24px 24px;
+      margin-top: auto;
+      color: var(--text-sub);
+      font-size: 0.88rem;
+    }
+
+    .footer-inner {
+      max-width: 850px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-nav a {
+      color: var(--text-sub);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-nav a:hover {
+      color: var(--primary-gold);
+    }
+
+    .copyright {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    /* トップへ戻るボタン */
+    .back-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--card-bg);
+      color: var(--primary-gold);
+      border: 1px solid var(--card-border);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      z-index: 99;
+      font-size: 1.1rem;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: var(--primary-gold);
+      color: var(--bg-dark);
+    }
   </style>
 </head>
 <body>
@@ -222,7 +331,7 @@
     <!-- リアルタイム検索 ＆ カテゴリ絞り込み -->
     <div class="filter-container">
       <div class="control-group">
-        <label for="dict-search">用紙をリアルタイム検索</label>
+        <label for="dict-search">用語をリアルタイム検索</label>
         <input type="text" id="dict-search" placeholder="例：身強、空亡、帝旺、偏財...">
       </div>
       <div class="control-group">
@@ -235,6 +344,12 @@
           <option value="通変星（行動・才能のキャラクター）">通変星（行動・才能のキャラクター）</option>
         </select>
       </div>
+    </div>
+
+    <!-- アコーディオン一括操作 -->
+    <div class="accordion-controls">
+      <button type="button" id="btn-expand-all" class="btn-action">🔓 すべて開く</button>
+      <button type="button" id="btn-collapse-all" class="btn-action">🔒 すべて閉じる</button>
     </div>
 
     <!-- 辞書コンテンツエリア -->
@@ -376,7 +491,7 @@
         <details class="dict-item" data-term="十二運星（じゅうにうんせい）">
           <summary class="dict-summary">十二運星（じゅうにうんせい）</summary>
           <div class="dict-content">
-            人の一生のバイオリズム（胎児～死～魂）になぞらえて、日干のエネルギーの強さや表現スタイルを表す12種類の星です。
+            人生の一生のバイオリズム（胎児～死～魂）になぞらえて、日干のエネルギーの強さや表現スタイルを表す12種類の星です。
           </div>
         </details>
 
@@ -472,14 +587,33 @@
 
   </main>
 
-  <!-- リアルタイム検索・カテゴリフィルター JS脚本 -->
+  <!-- フッター -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <ul class="footer-nav">
+        <li><a href="index.html">✨ トップページ</a></li>
+        <li><a href="dictionary.html">📖 四柱推命 知識辞典</a></li>
+        <li><a href="about.html">🏛 当ラボについて</a></li>
+      </ul>
+      <p class="copyright">&copy; Five Elements Lab. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ページトップへ戻るボタン -->
+  <button id="backToTop" class="back-to-top" title="ページトップへ戻る">▲</button>
+
+  <!-- JavaScript -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('dict-search');
       const categorySelect = document.getElementById('dict-filter');
       const sections = document.querySelectorAll('.category-section');
       const noResultMsg = document.getElementById('no-result');
+      const btnExpandAll = document.getElementById('btn-expand-all');
+      const btnCollapseAll = document.getElementById('btn-collapse-all');
+      const backToTopBtn = document.getElementById('backToTop');
 
+      // リアルタイム検索・フィルター処理
       function filterDictionary() {
         const query = searchInput.value.trim().toLowerCase();
         const selectedCat = categorySelect.value;
@@ -501,9 +635,8 @@
             if (isCatMatch && isSearchMatch) {
               item.style.display = 'block';
               visibleItemsInCat++;
-              // 検索ワードがある時は開く
               if (query) {
-                item.open = true;
+                item.open = true; // 検索キーワードがある時は自動で開く
               }
             } else {
               item.style.display = 'none';
@@ -523,6 +656,37 @@
 
       searchInput.addEventListener('input', filterDictionary);
       categorySelect.addEventListener('change', filterDictionary);
+
+      // 一括開閉コントロール
+      btnExpandAll.addEventListener('click', () => {
+        document.querySelectorAll('.dict-item').forEach(item => {
+          if (item.style.display !== 'none') {
+            item.open = true;
+          }
+        });
+      });
+
+      btnCollapseAll.addEventListener('click', () => {
+        document.querySelectorAll('.dict-item').forEach(item => {
+          item.open = false;
+        });
+      });
+
+      // トップへ戻るボタンの表示切替とクリック処理
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.classList.add('visible');
+        } else {
+          backToTopBtn.classList.remove('visible');
+        }
+      });
+
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
     });
   </script>
 
