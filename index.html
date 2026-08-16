@@ -13,18 +13,18 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <title>四柱推命 深層鑑定 - 無料で占う本格五行バランス解析ツール</title>
   <meta name="description" content="生年月日と出生時刻から五行バランスを徹底解析。あなたの宿命・大運・流年を紐解く無料の本格四柱推命Webアプリです。ユング心理学に基づく深層コラムや知識辞典も充実。今すぐ自分だけの深層鑑定書を生成してみましょう。">
 
-  <!-- フォントの読み込み -->
+  <!-- フォントの読み込み (Shippori Mincho & Noto Sans JP) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;700;800&display=swap" rel="stylesheet">
-  
+
   <!-- FontAwesome アイコン -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
+
   <style>
     :root {
       --bg-dark: #070c18;
@@ -34,6 +34,7 @@
       --gold-gradient: linear-gradient(135deg, #f3d078 0%, #c5a059 50%, #9a7835 100%);
       --gold-btn-gradient: linear-gradient(135deg, #e6c267 0%, #c59b3f 50%, #9e7526 100%);
       --text-main: #f1f5f9;
+      --text-sub: #94a3b8;
     }
     
     * {
@@ -60,12 +61,13 @@
     }
 
     .container {
-      max-width: 760px;
+      max-width: 780px;
       width: 100%;
       margin: 0 auto;
       text-align: center;
     }
     
+    /* ヘッダー＆ロゴ設定 */
     header {
       margin-bottom: 35px;
       display: flex;
@@ -131,62 +133,62 @@
       border-radius: 2px;
     }
 
+    /* 縦並びCTAボタンエリア */
     .btn-container {
-      margin: 30px 0 45px;
+      margin: 35px 0 45px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+      width: 100%;
     }
     
-    .btn { 
+    .cta-btn { 
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      background: var(--gold-btn-gradient); 
-      color: #0b111e; 
-      padding: 18px 42px; 
-      font-size: 1.25rem; 
+      gap: 10px;
+      padding: 16px 28px; 
+      font-size: 1.05rem; 
       font-weight: 700; 
       font-family: 'Shippori Mincho', serif;
       letter-spacing: 1px;
       text-decoration: none; 
       border-radius: 50px; 
       transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35), 0 2px 6px rgba(0, 0, 0, 0.4);
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-    
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-      transform: scale(0);
-      transition: transform 0.6s ease-out;
+      width: 100%;
+      max-width: 400px;
     }
 
-    .btn:hover { 
+    .btn-free {
+      background: rgba(15, 23, 42, 0.85);
+      color: #e2e8f0;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-free:hover {
+      background: rgba(30, 41, 59, 0.95);
+      border-color: var(--primary-gold);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
+    }
+
+    .btn-paid {
+      background: var(--gold-btn-gradient); 
+      color: #0b111e; 
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4), 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-paid:hover { 
       transform: translateY(-3px);
-      box-shadow: 0 10px 28px rgba(212, 175, 55, 0.5), 0 4px 12px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 28px rgba(212, 175, 55, 0.6), 0 4px 12px rgba(0, 0, 0, 0.5);
       color: #000000;
     }
 
-    .btn:hover::before {
-      transform: scale(1);
-    }
-
-    .btn i {
-      font-size: 1.1rem;
-      transition: transform 0.3s ease;
-    }
-
-    .btn:hover i {
-      transform: translateX(4px);
-    }
-
+    /* 機能説明セクション */
     .features { 
       text-align: left; 
       background: var(--card-bg); 
@@ -197,6 +199,7 @@
       border: 1px solid var(--card-border);
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
       position: relative;
+      margin-bottom: 50px;
     }
 
     .features::before {
@@ -251,6 +254,195 @@
       flex-shrink: 0;
     }
 
+    /* note メディア＆コラム セクション */
+    .note-section {
+      text-align: left;
+      margin-top: 40px;
+    }
+
+    /* note ヒーローカード */
+    .note-hero {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 35px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .note-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary-gold);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .note-hero h3 {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    .note-hero p {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    .btn-note-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #10b981;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-note-main:hover {
+      background: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    /* コラム一覧ヘッダー */
+    .note-list-title {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 1.35rem;
+      color: #ffffff;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .note-list-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+    }
+
+    /* 記事グリッド (2列レイアウト) */
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .article-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(252, 211, 77, 0.15);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 250px;
+      transition: all 0.3s ease;
+    }
+
+    .article-card:hover {
+      border-color: rgba(212, 175, 55, 0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-header-meta {
+      font-size: 0.75rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .log-badge {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.7rem;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .tag-label {
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #f8fafc;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      min-height: 48px;
+    }
+
+    .card-sub {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      line-height: 1.55;
+      margin-bottom: 18px;
+      min-height: 50px;
+    }
+
+    .card-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: rgba(30, 41, 59, 0.8);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 10px 0;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .card-btn:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      color: #ffffff;
+    }
+
+    .note-follow-info {
+      margin-top: 30px;
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 0.88rem;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .note-follow-info i {
+      color: var(--primary-gold);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* スマホ対応レスポンシブ */
     @media (max-width: 768px) {
       body { 
         padding: 40px 16px; 
@@ -266,11 +458,10 @@
       .subtitle { 
         font-size: 1rem; 
       }
-      .btn { 
-        display: flex; 
-        width: 100%; 
+      .cta-btn { 
+        max-width: 100%;
         padding: 16px 20px;
-        font-size: 1.15rem;
+        font-size: 1rem;
       }
       .features { 
         padding: 24px; 
@@ -281,55 +472,198 @@
       .features li {
         font-size: 0.95rem;
       }
+      .article-grid {
+        grid-template-columns: 1fr;
+      }
+      .note-hero {
+        padding: 24px;
+      }
+      .note-hero h3 {
+        font-size: 1.35rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <div class="logo-wrapper">
-        <img src="logo_2.png" alt="Five Elements Lab ロゴ" class="logo-img">
-      </div>
-      <h1>四柱推命 深層鑑定</h1>
-      <p class="subtitle">五行バランス解析に基づく運命診断ラボ</p>
-      <div class="divider"></div>
-    </header>
+<div class="container">
+  <header>
+    <div class="logo-wrapper">
+      <img src="logo_2.png" alt="Five Elements Lab ロゴ" class="logo-img">
+    </div>
+    <h1>四柱推命 深層鑑定</h1>
+    <p class="subtitle">五行バランス解析に基づく運命診断ラボ</p>
+    <div class="divider"></div>
+  </header>
 
-    <main>
-      <div class="btn-container">
-        <a href="https://uranai123.streamlit.app" class="btn" target="_blank" rel="noopener">
-          <span>アプリを今すぐ使う（無料）</span>
+  <main>
+    <!-- CTAボタンエリア -->
+    <div class="btn-container">
+      <a href="https://uranai123.streamlit.app" class="cta-btn btn-free" target="_blank" rel="noopener">
+        <i class="fa-solid fa-bolt"></i>
+        <span>簡易鑑定レポート（無料版）</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+
+      <a href="https://uranai123.net/pro" class="cta-btn btn-paid">
+        <i class="fa-solid fa-lock"></i>
+        <span>本格深層解剖レポート（有料版）</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <!-- ツール機能説明 -->
+    <section class="features">
+      <h2>
+        <i class="fa-solid fa-compass"></i>
+        <span>このツールでできること</span>
+      </h2>
+      <ul>
+        <li>
+          <i class="fa-solid fa-circle-check"></i>
+          <span>生年月日・出生時刻に基づく正確な命式（四柱 / 三柱推命）の算出</span>
+        </li>
+        <li>
+          <i class="fa-solid fa-circle-check"></i>
+          <span>五行バランススコア・身強身弱の客観的数値解析</span>
+        </li>
+        <li>
+          <i class="fa-solid fa-circle-check"></i>
+          <span>10年ごとの「大運」および1年ごとの「流年」運気タイムライン表示</span>
+        </li>
+        <li>
+          <i class="fa-solid fa-circle-check"></i>
+          <span>知的サバイバルコラムおよび四柱推命の知識辞典の閲覧</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- note メディア＆コラムエリア -->
+    <section class="note-section">
+      <!-- メインバナー -->
+      <div class="note-hero">
+        <div class="note-badge">
+          <i class="fa-solid fa-book-open"></i> OFFICIAL MEDIA / 対人システム監査
+        </div>
+        <h3>三上 壬之助 ｜ Five Elements.Lab (note)</h3>
+        <p>
+          東洋命理×心理学で人間OSの不具合を解剖する「対人システム監査」。<br>
+          なぜ優秀な経営者やハイスペ層が過剰防衛で自爆し、人生をクラッシュさせるのか？偉人の迷走からビジネス・婚活の失策まで、直視できぬ「影（シャドウ）」と命バグの構造を仕様レベルでデバッグします。
+        </p>
+        <a href="https://note.com/uranai123" target="_blank" rel="noopener" class="btn-note-main">
+          <span>全記事・最新コラムを読む (note)</span>
           <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
 
-      <section class="features">
-        <h2>
-          <i class="fa-solid fa-compass"></i>
-          <span>このツールでできること</span>
-        </h2>
-        <ul>
-          <li>
-            <i class="fa-solid fa-circle-check"></i>
-            <span>生年月日・出生時刻に基づく正確な命式（四柱 / 三柱推命）の算出</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-circle-check"></i>
-            <span>五行バランススコア・身強身弱の客観的数値解析</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-circle-check"></i>
-            <span>10年ごとの「大運」および1年ごとの「流年」運気タイムライン表示</span>
-          </li>
-          <li>
-            <i class="fa-solid fa-circle-check"></i>
-            <span>知的サバイバルコラムおよび四柱推命の知識辞典の閲覧</span>
-          </li>
-        </ul>
-      </section>
-    </main>
-  </div>
+      <!-- ログ一覧ヘッダー -->
+      <div class="note-list-title">
+        <i class="fa-solid fa-newspaper" style="color: var(--primary-gold);"></i>
+        <span>対人システム監査 ログ一覧</span>
+      </div>
+      <p class="note-list-subtitle">※ 記事の全文および最新コンテンツは note（@uranai123）にて公開しています。</p>
+
+      <!-- 記事カードグリッド (厳選4選) -->
+      <div class="article-grid">
+        
+        <!-- カード 1 -->
+        <div class="article-card">
+          <div>
+            <div class="card-header-meta">
+              <span class="log-badge">偉人監査 #1</span>
+              <span class="tag-label">👤 偉人解剖</span>
+            </div>
+            <div class="card-title">なぜニーチェは発狂したのか？</div>
+            <div class="card-sub">影逃避と比劫肥大が招いた「超人思想の誤読バグ」</div>
+          </div>
+          <a href="https://note.com/uranai123" target="_blank" rel="noopener" class="card-btn">
+            <span>noteで読む</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+
+        <!-- カード 2 -->
+        <div class="article-card">
+          <div>
+            <div class="card-header-meta">
+              <span class="log-badge">監査ログ #6</span>
+              <span class="tag-label">⚡️ 現場プロトコル</span>
+            </div>
+            <div class="card-title">なぜあの人は「一言の否定」にむきになり、噛み付き続けるのか？</div>
+            <div class="card-sub">スティーブ・ジョブズの命式が突きつける「倒食（過剰防衛）」のバグ</div>
+          </div>
+          <a href="https://note.com/uranai123" target="_blank" rel="noopener" class="card-btn">
+            <span>noteで読む</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+
+        <!-- カード 3 -->
+        <div class="article-card">
+          <div>
+            <div class="card-header-meta">
+              <span class="log-badge">監査ログ #4</span>
+              <span class="tag-label">🕯 婚活・アニムス</span>
+            </div>
+            <div class="card-title">なぜ「ハイスペ婚活女子」は初対面で絶賛され「2回目」で即切りされるのか？</div>
+            <div class="card-sub">「火多金熔」が招く皇帝アニムス暴走の正体</div>
+          </div>
+          <a href="https://note.com/uranai123" target="_blank" rel="noopener" class="card-btn">
+            <span>noteで読む</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+
+        <!-- カード 4 -->
+        <div class="article-card">
+          <div>
+            <div class="card-header-meta">
+              <span class="log-badge">監査ログ #3</span>
+              <span class="tag-label">👑 経営・自爆</span>
+            </div>
+            <div class="card-title">なぜ「そこそこ優秀だった経営者」は会社を自爆させる「裸の王様」へと暴走するのか？</div>
+            <div class="card-sub">過熱する自尊心のハルシネーションと命式の構造欠陥</div>
+          </div>
+          <a href="https://note.com/uranai123" target="_blank" rel="noopener" class="card-btn">
+            <span>noteで読む</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- note全記事への導線ボタン -->
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="https://note.com/uranai123" target="_blank" rel="noopener" style="
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: rgba(30, 41, 59, 0.9);
+          color: var(--primary-gold);
+          border: 1px solid var(--primary-gold);
+          padding: 12px 32px;
+          border-radius: 30px;
+          font-weight: 700;
+          font-size: 0.95rem;
+          text-decoration: none;
+          transition: all 0.3s ease;
+        ">
+          <span>noteで全コラム・最新記事一覧を見る</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <!-- noteフォロー案内 -->
+      <div class="note-follow-info">
+        <i class="fa-solid fa-lightbulb"></i>
+        <div>
+          <strong>note（@uranai123）</strong> をフォローすると、最新の思考デバッグコラムや深層解剖レポートの更新通知を受け取ることができます。
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
 
 </body>
 </html>
