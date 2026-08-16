@@ -44,6 +44,14 @@
       margin: 0;
       padding: 0;
       align-items: center;
+      overflow-x: auto; /* 溢れた場合横スクロール可能に */
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; /* Firefoxのスクロールバー非表示 */
+    }
+
+    .site-nav ul::-webkit-scrollbar {
+      display: none; /* Chrome/Safariのスクロールバー非表示 */
     }
 
     .site-nav a {
@@ -52,6 +60,8 @@
       font-size: 15px;
       font-weight: 500;
       transition: color 0.2s;
+      white-space: nowrap; /* テキストの折れ曲がり・改行を防止 */
+      display: inline-block;
     }
 
     .site-nav a:hover {
@@ -62,6 +72,22 @@
       color: #ffffff;
       border-bottom: 2px solid #ff4b4b;
       padding-bottom: 4px;
+    }
+
+    /* レスポンシブ用調整 (スマホ画面用) */
+    @media (max-width: 640px) {
+      .site-nav {
+        padding: 12px 16px;
+      }
+      .site-nav ul {
+        gap: 16px; /* スマホでは間隔を狭めて収まりやすく */
+      }
+      .site-nav a {
+        font-size: 14px;
+      }
+      .filter-container {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* メインコンテンツ配置 */
@@ -98,12 +124,6 @@
       padding: 20px;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    @media (max-width: 640px) {
-      .filter-container {
-        grid-template-columns: 1fr;
-      }
     }
 
     .control-group {
