@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>四柱推命 知識辞典 | Five Elements Lab</title>
+  <style>
+    /* 全体基本設定 */
+    :root {
+      --bg-dark: #0e1117;
+      --card-bg: #1e293b;
+      --card-border: rgba(212, 175, 55, 0.3);
+      --primary-gold: #d4af37;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ナビゲーションバー */
+    .site-nav {
+      background-color: #0e1117;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(250, 250, 250, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .site-nav ul {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    .site-nav a {
+      color: #808495;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .site-nav a:hover {
+      color: #ffffff;
+    }
+
+    .site-nav a.active {
+      color: #ffffff;
+      border-bottom: 2px solid #ff4b4b;
+      padding-bottom: 4px;
+    }
+
+    /* メインコンテンツ配置 */
+    .main-container {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sub-text {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+    }
+
+    /* 検索・フィルターコントロール群 */
+    .filter-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      margin-bottom: 30px;
+      background: rgba(30, 41, 59, 0.5);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    @media (max-width: 640px) {
+      .filter-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .control-group label {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    .control-group input,
+    .control-group select {
+      background: #0f172a;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: #f8fafc;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .control-group input:focus,
+    .control-group select:focus {
+      border-color: var(--primary-gold);
+    }
+
+    /* カテゴリセクション */
+    .category-section {
+      margin-bottom: 32px;
+    }
+
+    .category-title {
+      font-size: 1.25rem;
+      color: var(--primary-gold);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 用語アコーディオン (st.expander 再現) */
+    .dict-item {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .dict-item:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+    }
+
+    .dict-summary {
+      padding: 14px 18px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #f1f5f9;
+      list-style: none;
+    }
+
+    .dict-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .dict-summary::before {
+      content: "📙";
+      font-size: 0.9rem;
+    }
+
+    .dict-content {
+      padding: 16px 18px 20px;
+      background: rgba(15, 23, 42, 0.6);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* 未該当時の表示 */
+    .no-result {
+      display: none;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- タブ型ナビゲーションバー -->
+  <nav class="site-nav">
+    <ul>
+      <li><a href="index.html">✨ トップページ</a></li>
+      <li><a href="dictionary.html" class="active">📖 四柱推命 知識辞典</a></li>
+      <li><a href="about.html">🏛 当ラボについて</a></li>
+    </ul>
+  </nav>
+
+  <!-- メインコンテンツ領域 -->
+  <main class="main-container">
+    <h1>📖 四柱推命 知識辞典</h1>
+    <p class="sub-text">命式やタイムラインに登場する専門用語の意味や、鑑定結果を読み解くコツを解説します。</p>
+
+    <!-- リアルタイム検索 ＆ カテゴリ絞り込み -->
+    <div class="filter-container">
+      <div class="control-group">
+        <label for="dict-search">用紙をリアルタイム検索</label>
+        <input type="text" id="dict-search" placeholder="例：身強、空亡、帝旺、偏財...">
+      </div>
+      <div class="control-group">
+        <label for="dict-filter">カテゴリで絞り込み</label>
+        <select id="dict-filter">
+          <option value="すべて表示">すべて表示</option>
+          <option value="四柱推命の基本">四柱推命の基本</option>
+          <option value="命式の構造と強弱">命式の構造と強弱</option>
+          <option value="十干・十二支と十二運星">十干・十二支と十二運星</option>
+          <option value="通変星（行動・才能のキャラクター）">通変星（行動・才能のキャラクター）</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 辞書コンテンツエリア -->
+    <div id="dictionary-wrapper">
+
+      <!-- カテゴリ 1 -->
+      <section class="category-section" data-category="四柱推命の基本">
+        <h2 class="category-title">📂 四柱推命の基本</h2>
+
+        <details class="dict-item" data-term="四柱推命（しちゅうすいめい）">
+          <summary class="dict-summary">四柱推命（しちゅうすいめい）</summary>
+          <div class="dict-content">
+            生まれた「年・月・日・時」の4つの柱（四柱）から、個人の生得的な資質・運命のバイオリズムを精密に算出する中国発祥の東洋最高峰の占術です。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="四柱推命の歴史">
+          <summary class="dict-summary">四柱推命の歴史</summary>
+          <div class="dict-content">
+            唐代の李虚中が祖とされ、宋代の徐子平によって日干を中心とする現代の理論体系が完成したため「子平（しへい）」とも呼ばれます。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="陰陽五行（いんようごぎょう）">
+          <summary class="dict-summary">陰陽五行（いんようごぎょう）</summary>
+          <div class="dict-content">
+            万物を「木・火・土・金・水」の5つの元素（五行）と、それぞれの「陽（兄・え）」と「陰（弟・と）」に分類して世界とエネルギーの巡りを解釈する思想です。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="五行の関係 ～相生・相剋・比和～">
+          <summary class="dict-summary">五行の関係 ～相生・相剋・比和～</summary>
+          <div class="dict-content">
+            五行同士の相互作用を示す概念です。助け育てる関係を「相生（そうじょう）」、抑え込み剋する関係を「相剋（そうこく）」、同じ五行同士の強まりを「比和（ひわ）」と呼びます。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="大運（だいうん）">
+          <summary class="dict-summary">大運（だいうん）</summary>
+          <div class="dict-content">
+            人生の10年ごとの大きなテーマや環境の変化を表す運気のタイムラインです。長期的な生き方の指針や環境の流れを提示します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="流年（りゅうねん）/ 歳運">
+          <summary class="dict-summary">流年（りゅうねん）/ 歳運</summary>
+          <div class="dict-content">
+            1年ごとに巡ってくる年運（その年の世の中や個人への影響）のことです。大運という土台の上で具体的事件や出会いを引き起こします。
+          </div>
+        </details>
+      </section>
+
+      <!-- カテゴリ 2 -->
+      <section class="category-section" data-category="命式の構造と強弱">
+        <h2 class="category-title">📂 命式の構造と強弱</h2>
+
+        <details class="dict-item" data-term="命式（めいしき）">
+          <summary class="dict-summary">命式（めいしき）</summary>
+          <div class="dict-content">
+            生年月日時の干支を年柱・月柱・日柱・時柱の4列に配置した、個人の運命と五行構成を示す設計図（構造表）です。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="日干（にっかん）">
+          <summary class="dict-summary">日干（にっかん）</summary>
+          <div class="dict-content">
+            日柱の天干（てんかん）のことで、命式の中心となる「自分自身」の本質・精神状態を示す最も重要な要素です。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="蔵干（ぞうかん）">
+          <summary class="dict-summary">蔵干（ぞうかん）</summary>
+          <div class="dict-content">
+            地支（十二支）の内部に秘められている天干のエネルギーのことです。潜在的な才能や内面の欲望を表します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="日干と命式全体のバランス">
+          <summary class="dict-summary">日干と命式全体のバランス</summary>
+          <div class="dict-content">
+            日干のエネルギーが周りの干支から「生じられているか（印星・比劫）」「洩らされ奪われているか（食傷・財星・官殺）」を分析し、エネルギーの過不足を計る工程です。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="月支元命（げっしげんめい）">
+          <summary class="dict-summary">月支元命（げっしげんめい）</summary>
+          <div class="dict-content">
+            月柱の地支に含まれる本気蔵干から導き出される通変星。個人の社会行動、仕事観、本質的な性格の骨組みを支配します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="身強（みきょう）・身弱（みじゃく）">
+          <summary class="dict-summary">身強（みきょう）・身弱（みじゃく）</summary>
+          <div class="dict-content">
+            日干のエネルギー（自分自身の自立力・生命力）が強い状態を「身強」、エネルギーが抑えられ繊細な状態を「身弱」と呼びます。優劣ではなくエネルギーの使い方を表します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="月令を得ている（げつれい）">
+          <summary class="dict-summary">月令を得ている（げつれい）</summary>
+          <div class="dict-content">
+            生まれ月の季節（月支）が自分の日干と同調・あるいは自分を生じる関係にある状態（得令）。身強・身弱の判断で大きな加点要素となります。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="格局（かっきょく）">
+          <summary class="dict-summary">格局（かっきょく）</summary>
+          <div class="dict-content">
+            命式全体のエネルギーバランスの型（構造分類）のこと。内格（普通格局）と外格（特別格局）に分類され、運の波や好ましい五行（用神）を導く指標となります。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="空亡（くうぼう）/ 天中殺">
+          <summary class="dict-summary">空亡（くうぼう）/ 天中殺</summary>
+          <div class="dict-content">
+            十干と十二支の組み合わせで生じる「空間があって枠組みがない（天の加護が薄い）時期」。精神的学びや軌道修正に適した期間とされます。
+          </div>
+        </details>
+      </section>
+
+      <!-- カテゴリ 3 -->
+      <section class="category-section" data-category="十干・十二支と十二運星">
+        <h2 class="category-title">📂 十干・十二支と十二運星</h2>
+
+        <details class="dict-item" data-term="天干・地支（てんかん・ちし）">
+          <summary class="dict-summary">天干・地支（てんかん・ちし）</summary>
+          <div class="dict-content">
+            甲・乙・丙・丁・戊・己・庚・辛・壬・癸の「十干」と、子・丑・寅・卯・辰・巳・午・未・申・酉・戌・亥の「十二支」の総称です。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="六十干支（ろくじっかんし）">
+          <summary class="dict-summary">六十干支（ろくじっかんし）</summary>
+          <div class="dict-content">
+            十干と十二支を順番に組み合わせてできる60通りのペア。甲子から始まり癸亥で一巡します（還暦の由来）。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="十二運星（じゅうにうんせい）">
+          <summary class="dict-summary">十二運星（じゅうにうんせい）</summary>
+          <div class="dict-content">
+            人の一生のバイオリズム（胎児～死～魂）になぞらえて、日干のエネルギーの強さや表現スタイルを表す12種類の星です。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="胎・養・長生・沐浴・冠帯・建禄・帝旺・衰・病・死・墓・絶">
+          <summary class="dict-summary">胎・養・長生・沐浴・冠帯・建禄・帝旺・衰・病・死・墓・絶</summary>
+          <div class="dict-content">
+            十二運星の各段階のこと。帝旺・建禄などの強いエネルギーから、病・死・絶などの精神性が高く直感が冴えるエネルギーまで、各柱での現れ方を読み解きます。
+          </div>
+        </details>
+      </section>
+
+      <!-- カテゴリ 4 -->
+      <section class="category-section" data-category="通変星（行動・才能のキャラクター）">
+        <h2 class="category-title">📂 通変星（行動・才能のキャラクター）</h2>
+
+        <details class="dict-item" data-term="比肩（ひけん）">
+          <summary class="dict-summary">比肩（ひけん）</summary>
+          <div class="dict-content">
+            日干と同じ五行・陰陽。自立心、強い意志、マイペース、職人気質を表します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="劫財（ごうざい）">
+          <summary class="dict-summary">劫財（ごうざい）</summary>
+          <div class="dict-content">
+            日干と同じ五行・異なる陰陽。協調性と野心、スケールの大きな目標達成力、内面の闘志を表します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="食神（しょくじん）">
+          <summary class="dict-summary">食神（しょくじん）</summary>
+          <div class="dict-content">
+            日干が生じる五行・同じ陰陽。衣食住の恵み、表現力、自然体、大らかさを表します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="傷官（しょうかん）">
+          <summary class="dict-summary">傷官（しょうかん）</summary>
+          <div class="dict-content">
+            日干が生じる五行・異なる陰陽。鋭い感性、美意識、クリエイティブ才能、反骨精神を表します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="偏財（へんざい）">
+          <summary class="dict-summary">偏財（へんざい）</summary>
+          <div class="dict-content">
+            日干が剋する五行・異なる陰陽。商才、流動的な財運、サービス精神、広範な人間関係を表します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="正財（せいざい）">
+          <summary class="dict-summary">正財（せいざい）</summary>
+          <div class="dict-content">
+            日干が剋する五行・同じ陰陽。着実な蓄財、信用、誠実さ、家庭的な安全志向を表します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="偏官（へんかん）">
+          <summary class="dict-summary">偏官（へんかん）</summary>
+          <div class="dict-content">
+            日干を剋する五行・異なる陰陽。行動力、親分肌、実行力、情熱的なリーダーシップを表します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="正官（せいかん）">
+          <summary class="dict-summary">正官（せいかん）</summary>
+          <div class="dict-content">
+            日干を剋する五行・同じ陰陽。気品、ルール重視、社会的な責任感、名誉を表します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="偏印（へんいん）">
+          <summary class="dict-summary">偏印（へんいん）</summary>
+          <div class="dict-content">
+            日干を生じる五行・異なる陰陽。好奇心、独創的な知性、アイデア力、移り気な一面を表します。
+          </div>
+        </details>
+
+        <details class="dict-item" data-term="印綬（いんじゅ）">
+          <summary class="dict-summary">印綬（いんじゅ）</summary>
+          <div class="dict-content">
+            日干を生じる五行・同じ陰陽。学問・伝統への関心、慈愛、名誉、論理的思考力を表します。
+          </div>
+        </details>
+      </section>
+
+    </div>
+
+    <!-- 検索該当なしメッセージ -->
+    <div id="no-result" class="no-result">
+      🔍 入力されたキーワードに一致する用語が見つかりませんでした。別の言葉で試してみてください。
+    </div>
+
+  </main>
+
+  <!-- リアルタイム検索・カテゴリフィルター JS脚本 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('dict-search');
+      const categorySelect = document.getElementById('dict-filter');
+      const sections = document.querySelectorAll('.category-section');
+      const noResultMsg = document.getElementById('no-result');
+
+      function filterDictionary() {
+        const query = searchInput.value.trim().toLowerCase();
+        const selectedCat = categorySelect.value;
+        let anyVisible = false;
+
+        sections.forEach(section => {
+          const categoryName = section.getAttribute('data-category');
+          const isCatMatch = (selectedCat === 'すべて表示' || categoryName === selectedCat);
+
+          let visibleItemsInCat = 0;
+          const items = section.querySelectorAll('.dict-item');
+
+          items.forEach(item => {
+            const term = item.getAttribute('data-term').toLowerCase();
+            const content = item.querySelector('.dict-content').textContent.toLowerCase();
+
+            const isSearchMatch = !query || term.includes(query) || content.includes(query) || categoryName.toLowerCase().includes(query);
+
+            if (isCatMatch && isSearchMatch) {
+              item.style.display = 'block';
+              visibleItemsInCat++;
+              // 検索ワードがある時は開く
+              if (query) {
+                item.open = true;
+              }
+            } else {
+              item.style.display = 'none';
+            }
+          });
+
+          if (visibleItemsInCat > 0) {
+            section.style.display = 'block';
+            anyVisible = true;
+          } else {
+            section.style.display = 'none';
+          }
+        });
+
+        noResultMsg.style.display = anyVisible ? 'none' : 'block';
+      }
+
+      searchInput.addEventListener('input', filterDictionary);
+      categorySelect.addEventListener('change', filterDictionary);
+    });
+  </script>
+
+</body>
+</html>

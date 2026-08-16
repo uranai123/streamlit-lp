@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>当ラボについて | Five Elements Lab</title>
+  <style>
+    /* 全体基本設定 */
+    :root {
+      --bg-dark: #0e1117;
+      --card-bg-start: #1e293b;
+      --card-bg-end: #0f172a;
+      --primary-gold: #F59E0B;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ナビゲーションバー */
+    .site-nav {
+      background-color: #0e1117;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(250, 250, 250, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .site-nav ul {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    .site-nav a {
+      color: #808495;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .site-nav a:hover {
+      color: #ffffff;
+    }
+
+    .site-nav a.active {
+      color: #ffffff;
+      border-bottom: 2px solid #ff4b4b;
+      padding-bottom: 4px;
+    }
+
+    /* メインコンテンツ配置 */
+    .main-container {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+
+    /* プロフィールカード */
+    .profile-card {
+      background: linear-gradient(135deg, var(--card-bg-start) 0%, var(--card-bg-end) 100%);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .profile-header {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo-container {
+      flex: 0 0 180px;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .logo-img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 50%;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      object-fit: cover;
+    }
+
+    .profile-info {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .subtitle {
+      font-family: 'Georgia', serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      color: var(--primary-gold);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .profile-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #F8FAFC;
+      margin: 0 0 8px 0;
+      letter-spacing: 0.5px;
+    }
+
+    .profile-name {
+      font-size: 18px;
+      color: #CBD5E1;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .profile-name .en-name {
+      font-size: 14px;
+      color: #94A3B8;
+      font-weight: normal;
+      margin-left: 6px;
+    }
+
+    .profile-description {
+      color: #CBD5E1;
+      font-size: 14.5px;
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #334155;
+      margin: 28px 0 24px 0;
+    }
+
+    .classics-section {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary-gold);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 14px;
+    }
+
+    .classics-tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background-color: #0F172A;
+      border: 1px solid rgba(245, 158, 11, 0.31);
+      color: #E2E8F0;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- タブ型ナビゲーションバー -->
+  <nav class="site-nav">
+    <ul>
+      <li><a href="index.html">✨ トップページ</a></li>
+      <li><a href="dictionary.html">📖 四柱推命 知識辞典</a></li>
+      <li><a href="about.html" class="active">🏛 当ラボについて</a></li>
+    </ul>
+  </nav>
+
+  <!-- メインコンテンツ領域 -->
+  <main class="main-container">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="logo-container">
+          <img src="logo_2.png" alt="Five Elements.Lab ロゴ" class="logo-img" onerror="this.style.display='none'">
+        </div>
+        <div class="profile-info">
+          <div class="subtitle">Laboratory Profile</div>
+          <h2 class="profile-title">Five Elements.Lab</h2>
+          <div class="profile-name">
+            三上 壬之助 <span class="en-name">(Mikami Jinnosuke)</span>
+          </div>
+          <div class="profile-description">
+            伝統的な五行論および四柱推命（子平学）の原典・古典をベースに、運命構造の解読と探求を行う命理研究家。<br>
+            『滴天髄』『子平真詮』をはじめとする原典解釈に基づき、感性に頼らない論理的かつ本質的な鑑定・構造分析を提供する。
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div>
+        <div class="classics-section">📜 主要拠り所（四大古典）</div>
+        <div class="classics-tags">
+          <span class="tag">『滴天髄』</span>
+          <span class="tag">『窮通宝鑑』</span>
+          <span class="tag">『子平真詮』</span>
+          <span class="tag">『淵海子平』</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
