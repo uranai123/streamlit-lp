@@ -238,39 +238,48 @@
       border-radius: 2px;
     }
 
-    /* CTAボタンエリア (単一ゴールドボタン) */
+    /* メンテナンス中ボタンエリアのスタイル */
     .btn-container {
       margin: 35px 0 45px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       width: 100%;
     }
     
-    .cta-btn { 
+    .cta-btn-maintenance { 
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
       padding: 18px 36px; 
-      font-size: 1.1rem; 
+      font-size: 1.05rem; 
       font-weight: 700; 
       font-family: 'Shippori Mincho', serif;
       letter-spacing: 1px;
       text-decoration: none; 
       border-radius: 50px; 
-      transition: all 0.3s ease;
       width: 100%;
       max-width: 420px;
-      background: var(--gold-btn-gradient); 
-      color: #0b111e; 
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4), 0 2px 6px rgba(0, 0, 0, 0.4);
+      background: rgba(30, 41, 59, 0.9); 
+      color: #94a3b8; 
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
     }
 
-    .cta-btn:hover { 
-      transform: translateY(-3px);
-      box-shadow: 0 10px 28px rgba(212, 175, 55, 0.6), 0 4px 12px rgba(0, 0, 0, 0.5);
-      color: #000000;
+    .cta-btn-maintenance:hover { 
+      background: rgba(40, 55, 80, 0.95);
+      color: #cbd5e1;
+      border-color: rgba(212, 175, 55, 0.5);
+    }
+
+    .maintenance-note {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--primary-gold);
+      letter-spacing: 0.5px;
     }
 
     /* 機能説明セクション */
@@ -543,7 +552,7 @@
       .subtitle { 
         font-size: 1rem; 
       }
-      .cta-btn { 
+      .cta-btn-maintenance { 
         max-width: 100%;
         padding: 16px 20px;
         font-size: 1rem;
@@ -599,12 +608,13 @@
   </header>
 
   <main>
-    <!-- CTAボタンエリア（単一ゴールドボタン） -->
+    <!-- メンテナンス中ボタンエリア -->
     <div class="btn-container">
-      <a href="https://uranai123.streamlit.app" class="cta-btn" target="_blank" rel="noopener">
-        <span>アプリを今すぐ使う（無料）</span>
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
+      <button class="cta-btn-maintenance" onclick="alert('ただいま次回公開に向けたシステムメンテナンス中です。');">
+        <i class="fa-solid fa-lock" style="color: var(--primary-gold);"></i>
+        <span>ただいまシステムメンテナンス中</span>
+      </button>
+      <div class="maintenance-note">※ 次回アップデート準備にともない一時停止しております</div>
     </div>
 
     <!-- ツール機能説明 -->
@@ -697,13 +707,13 @@
         <div class="article-card">
           <div>
             <div class="card-header-meta">
-              <span class="log-badge">監査ログ #7</span>
-              <span class="tag-label">🕊 理想・当事者性</span>
+              <span class="log-badge">監査ログ #4</span>
+              <span class="tag-label">🕯 婚活・アニムス</span>
             </div>
-            <div class="card-title">なぜ「大きな愛」や「綺麗な理想」を語る人ほど、身近な責任から逃げ出すのか？</div>
-            <div class="card-sub">ジョン・レノンの肉体と命式が突きつける「観念の城塞（フロントUI）」と「浮根の当事者性放棄（バックエンド）」のバグ</div>
+            <div class="card-title">なぜ「ハイスペ婚活女子」は初対面で絶賛され「2回目」で即切りされるのか？</div>
+            <div class="card-sub">「火多金熔」が招く皇帝アニムス暴走の正体</div>
           </div>
-          <a href="https://note.com/uranai123/n/n8943db10b83f" target="_blank" rel="noopener" class="card-btn">
+          <a href="https://note.com/uranai123" target="_blank" rel="noopener" class="card-btn">
             <span>noteで読む</span>
             <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
